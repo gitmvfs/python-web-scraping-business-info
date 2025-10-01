@@ -6,12 +6,13 @@ class AbstractDatabaseModel(ABC):
     """Base abstract class for database models with common CRUD operations."""
 
     @abstractmethod
-    def return_query(self) -> str:
+    def create_table(self) -> str:
         """
-        Return the SQL query to create the table.
+        Create table in database
         
         Returns:
-            str: The SQL CREATE TABLE query.
+            str: "Create table success"
+                        
         """
         pass
 
@@ -28,19 +29,6 @@ class AbstractDatabaseModel(ABC):
         """
         pass
 
-    def insert_many(self, cursor: Cursor, data_list: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        """
-        Insert multiple records and return an array of created objects.
-        
-        Args:
-            cursor (Cursor): The database cursor.
-            data_list (list[dict[str, Any]]): A list of records to insert.
-        
-        Returns:
-            list[dict[str, Any]]: A list of created objects.
-        """
-        pass
-    
     def update_data(self, cursor: Cursor, data: dict[str, Any], id: int) -> dict[str, Any]:
         """
         Update a record by its ID and return both the old and new data.
@@ -93,15 +81,3 @@ class AbstractDatabaseModel(ABC):
         """
         pass
     
-    def delete_many(self, cursor: Cursor, ids: list[int]) -> list[dict[str, Any]]:
-        """
-        Delete multiple records by their IDs.
-        
-        Args:
-            cursor (Cursor): The database cursor.
-            ids (list[int]): A list of record IDs to delete.
-        
-        Returns:
-            list[dict[str, Any]]: A list of deleted records.
-        """
-        pass
