@@ -101,3 +101,10 @@ class UserTable:
         result = self.database.execute_query_fetchall(query, (email,))
         print(result)
         return result
+
+    def login(self, user_input: dict[str, Any]) -> None:
+
+        email = str(user_input['email'])
+        result = self.find_by_email(email)
+
+        print(result)
