@@ -84,5 +84,20 @@ class UserTable:
         """
         query = "SELECT * FROM USERS"
         result = self.database.execute_query_fetchall(query)
-        
+
+        return result
+
+    def find_by_email(self, email: str) -> list[tuple]:
+        """
+        Find a user by their email.
+
+        Args:
+            email (str): The email to search for.
+
+        Returns:
+            list[tuple]: A list containing the user(s) matching the email.
+        """
+        query = "SELECT * FROM USERS WHERE email = ?"
+        result = self.database.execute_query_fetchall(query, (email,))
+        print(result)
         return result
