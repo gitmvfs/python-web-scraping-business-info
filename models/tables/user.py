@@ -47,7 +47,7 @@ class UserTable:
         print('Table USERS created with success')
         return 204
 
-    def insert_single(self, user_data: dict[str, Any]) -> int:
+    def insert(self, user_data: dict[str, Any]) -> int:
         """
         Insert a single record into the `USERS` table.
 
@@ -73,3 +73,16 @@ class UserTable:
         self.database.execute_query(query, values)
 
         return 204  # Created success
+
+    def find_all(self) -> list[tuple]:
+        """
+        Retrieve all records from the `USERS` table.
+
+        Returns:
+            list[tuple]: A list of all users, where each user is a tuple
+            containing all columns in the USERS table.
+        """
+        query = "SELECT * FROM USERS"
+        result = self.database.execute_query_fetchall(query)
+        
+        return result
