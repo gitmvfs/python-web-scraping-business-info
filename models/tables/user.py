@@ -47,3 +47,29 @@ class UserTable:
         print('Table USERS created with success')
         return 204
 
+    def insert_single(self, user_data: dict[str, Any]) -> int:
+        """
+        Insert a single record into the `USERS` table.
+
+        Args:
+            user_data (dict[str, Any]): User data containing:
+                - uuid (str): Unique identifier for the user.
+                - name (str): User's name.
+                - email (str): User's email (must be unique).
+                - password (str): User's password hash.
+
+        Returns:
+            int: 204 if the record is created successfully.
+
+        Raises:
+            sqlite3.IntegrityError: If `uuid` or `email` already exists in the database.
+        """
+        query = textwrap.dedent("""
+            INSERT INTO USERS (uuid, name, email, password)
+            VALUES(?, ?, ?, ?)
+        """)
+
+        values = (user_data['uuid'], user_data['name'], user_data['email'], user_data['password'])
+        self.database.execute_query(query, values)
+
+        return 204  # Created success
