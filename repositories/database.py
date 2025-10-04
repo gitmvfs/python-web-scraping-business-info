@@ -1,14 +1,13 @@
 import sqlite3
-import traceback
 
 class Database():
 
-    default_file_path = str('repositories/database.db')
+    DEFAULT_FILE_PATH = str('repositories/database.db')
 
-    def __init__(self, file_path:str = default_file_path):
+    def __init__(self, file_path:str = DEFAULT_FILE_PATH):
         self.connect(file_path)
 
-    def connect(self, file_path:str = default_file_path):
+    def connect(self, file_path:str = DEFAULT_FILE_PATH):
 
         self.database = sqlite3.connect(file_path)
         self.cursor = self.database.cursor() #implement actions in the database     
@@ -26,7 +25,7 @@ class Database():
         self.update()
         self.closeConnect()
 
-    def execute_query_fetchall(self, query:str, parameters = '') -> list:
+    def execute_query_fetchall(self, query:str, parameters = () ) -> list:
         self.connect()
         self.cursor.execute(query, parameters)
         rows = self.cursor.fetchall()
