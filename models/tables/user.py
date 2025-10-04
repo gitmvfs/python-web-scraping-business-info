@@ -2,18 +2,14 @@ from ..abstract.models import AbstractDatabaseModel
 import textwrap
 from repositories.database import Database
 from models.validation.user_data import UserData, UserInputLogin
+from typing import Any
+from sqlite3 import IntegrityError
 
 class User(AbstractDatabaseModel):
 
     def __init__(self):
         self.database = Database()
         pass
-
-import textwrap
-from sqlite3 import IntegrityError
-from typing import Any
-
-class UserTable:
 
     def create_table(self) -> int:
         """
@@ -44,7 +40,7 @@ class UserTable:
         """)
 
         self.database.execute_query(query)
-        print('Table USERS created with success')
+        print('Table USERS connect with success')
         return 204
 
     def insert(self, user_data: dict[str, Any]) -> int:
@@ -99,12 +95,11 @@ class UserTable:
         """
         query = "SELECT * FROM USERS WHERE email = ?"
         result = self.database.execute_query_fetchall(query, (email,))
-        print(result)
         return result
 
-    def login(self, user_input: dict[str, Any]) -> None:
+    def login(self, user_input: dict[str, Any], user_database: dict[str, Any]) -> bool:
 
-        email = str(user_input['email'])
-        result = self.find_by_email(email)
-
-        print(result)
+        if user_input['email'] == user_database['email'] and user_input['password'] == user_database['password']:
+            return True
+        else:
+            return False
